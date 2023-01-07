@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateUserBiosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('nip');
-            $table->foreignId('jabatan_id');
-            $table->foreignId('kantor_id');
-            $table->timestamps();
+        Schema::create('user_bios', function (Blueprint $table) {
+            $table->foreignId('user_id');
+            $table->date('tgl_lahir');
+            $table->tinyInteger('j_kelamin');
+            $table->string('alamat');
+            $table->string('no_telepon');
         });
     }
 
@@ -30,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_bios');
     }
 }

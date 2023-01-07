@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Jabatan extends Model
 {
     use HasFactory;
+
+    public function pegawais()
+    {
+        return $this->hasMany(Pegawai::class);
+    }
 }

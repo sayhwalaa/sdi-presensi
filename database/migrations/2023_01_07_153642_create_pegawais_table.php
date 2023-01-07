@@ -14,15 +14,25 @@ class CreatePegawaisTable extends Migration
     public function up()
     {
         Schema::create('pegawais', function (Blueprint $table) {
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('nama');
             $table->string('nip');
             $table->date('tgl_lahir')->nullable();
             $table->tinyInteger('j_kelamin')->nullable();
             $table->string('alamat')->nullable();
             $table->string('no_telepon')->nullable();
-            $table->foreignId('jabatan_id')->nullable();
-            $table->foreignId('cabang_id')->nullable();
+            $table->string('foto')->nullable();
+            $table->foreignId('jabatan_id')->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+            $table->foreignId('cabang_id')->nullable()
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
             $table->timestamps();
         });
     }

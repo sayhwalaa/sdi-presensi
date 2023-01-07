@@ -11,4 +11,6 @@ Route::get('/', [MenuController::class, 'index'])->name('menu.home')->middleware
 // auth
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'login'])->name('auth');
+Route::get('daftar', [AuthController::class, 'create'])->name('daftar');
+Route::post('daftar', [AuthController::class, 'store'])->name('store');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');

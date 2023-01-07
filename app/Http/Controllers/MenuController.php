@@ -8,7 +8,7 @@ class MenuController extends Controller
 {
     public function index()
     {
-        return view('menus.index')->with([
+        return view('index')->with([
             'title' => 'Sabang Digital Indonesia'
         ]);
     }

@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PegawaiController;
 use Illuminate\Support\Facades\Route;
 
-// menu
+// home
 Route::get('/', [MenuController::class, 'index'])->name('menu.home')->middleware('auth');
 
+// admin
+Route::resource('pegawai', PegawaiController::class)->middleware('auth');
 
 // auth
 Route::get('login', [AuthController::class, 'index'])->name('login');

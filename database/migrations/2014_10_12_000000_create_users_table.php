@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('nama');
             $table->string('nip');
             $table->foreignId('jabatan_id');
-            $table->foreignId('kantor_id');
+            $table->foreignId('cabang_id');
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ class CreateUserCredentialsTable extends Migration
         Schema::create('user_credentials', function (Blueprint $table) {
             $table->foreignId('user_id');
             $table->string('email')->unique();
+            $table->string('password');
             $table->timestamp('email_verified_at');
             $table->timestamps();
         });

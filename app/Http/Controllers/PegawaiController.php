@@ -22,15 +22,7 @@ class PegawaiController extends Controller
     }
     public function index()
     {
-        $user = User::where('role', 'Pegawai')->paginate(15);
-        $jabatan = Jabatan::all();
-        $cabang = Cabang::all();
-        return view('admin.pegawai')->with([
-            'title' => 'Data Pegawai',
-            'users' => $user,
-            'jabatans' => $jabatan,
-            'cabangs' => $cabang
-        ]);
+        return response()->json(User::where('role', 'Pegawai')->get());
     }
 
     /**
@@ -52,13 +44,13 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::Make($request->all(), [
-            'name' => 'required|min:3',
-            'rarity' => 'required|in:4,5',
-            'weapon' => 'required|in:"sword","claymore","polearm","catalyst","bow"',
-            'vision' => 'required|in:"pyro","hydro","electro","cryo","dendro","anemo","geo"',
-            'birthday' => 'required|date',
-            'constellation' => 'required|min:3',
-            'region' => 'required|min:3'
+            'nip' => 'required|numeric|size:18',
+            'nama' => 'required|min:3',
+            'jabatan_id' => 'required',
+            'jenis_kelamin' => 'required',
+            'no_telepon' => 'numeric',
+            'jabatan_id' => 'required',
+            'cabang_id' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -66,19 +58,24 @@ class PegawaiController extends Controller
                 'errors' => $validator->messages()
             ]);
         } else {
+            User::create([
+                'role' => 'Pegawai'
+            ]);
             $data = [
-                'name' => ucwords(trim($request->name)),
-                'rarity' => $request->rarity,
-                'weapon' => $request->weapon,
-                'vision' => $request->vision,
-                'Birthday' => $request->birthday,
-                'constellation' => ucwords(trim($request->constellation)),
-                'region' => ucwords(trim($request->region))
+                'user_id' => User::latest()->first()->id,
+                'nip' => trim($request->nip),
+                'nama' => ucwords(trim($request->nama)),
+                'tgl_lahir' => $request->tgl_lahir,
+                'j_kelamin' => $request->j_kelamin,
+                'no_telepon' => $request->no_telepon,
+                'alamat' => $request->alamat,
+                'jabatan_id' => $request->jabatan_id,
+                'cabang_id' => $request->cabang_id,
             ];
-            Char::create($data);
+            Pegawai::create($data);
             return response()->json([
                 'status' => 200,
-                'message' => 'New Character successfully added',
+                'message' => 'New Pegwai successfully added',
             ]);
         }
     }

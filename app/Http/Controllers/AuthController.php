@@ -35,7 +35,7 @@ class AuthController extends Controller
         ]);
         $validateData['password'] = Hash::make($validateData['password']);
         User::create($validateData);
-        $user = User::where('email', $validateData['email'])->first();
+        $user = User::latest()->first();
         $pegawai = new Pegawai;
         $pegawai->nama = $validateData['nama'];
         $pegawai->nip = $validateData['nip'];

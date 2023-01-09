@@ -29,11 +29,19 @@
 
 
                 <div class="col-12">
+                    @if(session()->has('pesan'))
+                    <div class="alert alert-success" style="color:white;">
+                        {{ session()->get('pesan')}}
+                        <div style="float: right">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                    @endif
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                             <h6>Data Pengguna</h6>
-                            <button class="btn bg-gradient-dark mb-3" data-bs-toggle="modal"
-                                data-bs-target="#tambahModal">Tambah Data</button>
+                            <button id="addPegawai" class="btn  bg-gradient-dark mb-3" data-bs-toggle="modal"
+                                data-bs-target="#addPegawaiModal">Tambah Data</button>
 
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
@@ -45,45 +53,52 @@
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 No</th>
                                             <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                NIP</th>
+                                            <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Nama</th>
                                             <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
-                                                Email</th>
+                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Jabatan</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Role</th>
+                                                Cabang</th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($users as $key => $user)
+                                        @foreach($pegawai as $key => $p)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="px-2 mb-0 text-xs">{{$users->firstItem()+$key}}
+                                                        <h6 class="px-2 mb-0 text-xs">{{$pegawai->firstItem()+$key}}
                                                         </h6>
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{$p->pegawai->nip}}</p>
+                                            </td>
                                             <td class="align-middle text-center text-sm">
+                                                <span class="text-xs font-weight-bold mb-0">{{$p->nama??'N/A'}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
                                                 <span
-                                                    class="text-xs font-weight-bold mb-0">{{$user->pegawai->nama}}</span>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold mb-0">{{$user->email}}</span>
+                                                    class="text-secondary text-xs font-weight-bold">{{$p->pegawai->jabatan??'N/A'}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold">roleZ</span>
+                                                <span
+                                                    class="text-secondary text-xs font-weight-bold">{{$p->pegawai->cabang??'NA'}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <button class="btn btn-warning">
+                                                <button id="editPegawai" class="btn btn-warning">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-danger">
+                                                <button id="deletePegawai" class="btn btn-danger">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </td>
@@ -93,11 +108,11 @@
                                 </table>
                                 <small class="px-3" style="font-weight: bold">
                                     Showing
-                                    {{$users->firstItem()}}
+                                    {{$pegawai->firstItem()}}
                                     to
-                                    {{$users->lastItem()}}
+                                    {{$pegawai->lastItem()}}
                                     of
-                                    {{$users->total()}}
+                                    {{$pegawai->total()}}
                                     entries
                                 </small>
                                 <style>
@@ -107,11 +122,8 @@
                                 </style>
                                 <div class="page"
                                     style="float: right; font-weight:bold; margin-right: 50px; margin-top: 20px;">
-                                    {{$users->links()}}
+                                    {{$pegawai->links()}}
                                 </div>
-
-
-
                             </div>
                         </div>
                     </div>
@@ -120,11 +132,11 @@
         </div>
 
         {{-- modal --}}
-        <div class="modal fade" id="tambahModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addPegawaiModal" aria-labelledby="addPegawaiLabel" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Pendaftaran Pegawai</h5>
+                        <h5 class="modal-title" id="addPegawaiLabel">Pendaftaran Pegawai</h5>
                         <button class="btn-close bg-danger" type="button" data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
@@ -134,7 +146,7 @@
                             <div class='mb-3'>
                                 <label for="nip" class="form-label">NIP</label>
                                 <input required type="number" name="nip" id="nip" value="{{ old(" nip") }}"
-                                    class="form-control @error('nip') is-invalid @enderror">
+                                    class="form-control @error('nip') is-invalid @enderror" autofocus>
                                 @error('nip')
                                 <div class='text-danger'>{{ $message }}</div>
                                 @enderror
@@ -188,8 +200,8 @@
                                 <select name="jabatan_id" id="jabatan_id" class="form-control"
                                     value="{{ old('jabatan_id') }}">
                                     <option>-- Pilih Jabatan --</option>
-                                    @foreach ($jabatans as $jabatan)
-                                    <option value="{{ $jabatan->id }}">{{ $jabatan->jabatan }}</option>
+                                    @foreach ($jabatan as $j)
+                                    <option value="{{ $j->id }}">{{ $j->jabatan }}</option>
                                     @endforeach
                                 </select>
                                 @error('jabatan_id')
@@ -202,8 +214,8 @@
                                 <select name="cabang_id" id="cabang_id" class="form-control"
                                     value="{{ old('cabang_id') }}">
                                     <option>-- Pilih Cabang --</option>
-                                    @foreach ($cabangs as $cabangs)
-                                    <option value="{{ $cabangs->id }}">{{ $cabangs->nama_cabang }}</option>
+                                    @foreach ($cabang as $c)
+                                    <option value="{{ $c->id }}">{{ $c->nama_cabang }}</option>
                                     @endforeach
                                 </select>
                                 @error('cabang_id')
@@ -218,7 +230,7 @@
                             </div>
 
                             <div style="float: right">
-                                <button type="submit" class="btn btn-primary mb-2">Daftar</button>
+                                <button id="save" type="button" class="btn btn-primary mb-2">Daftar</button>
                             </div>
                         </form>
                     </div>
@@ -234,6 +246,8 @@
     </main>
     <!--   Core JS Files   -->
     @include('template.script')
+
+    <script src="/js/pegawai.js"></script>
 </body>
 
 </html>

@@ -10,6 +10,7 @@ Route::get('/', [MenuController::class, 'index'])->name('menu.home')->middleware
 
 // admin
 Route::resource('pegawai', PegawaiController::class)->middleware('auth');
+Route::get('admin/pegawai', [MenuController::class, 'pegawai'])->name('menu.pegawai')->middleware('auth');
 
 // auth
 Route::get('login', [AuthController::class, 'index'])->name('login');

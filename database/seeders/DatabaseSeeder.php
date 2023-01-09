@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => 1,
                 'cabang' => 'Pontianak'
-            ],
+            ]
+        );
+        DB::table('cabangs')->insert(
             [
                 'id' => 2,
                 'cabang' => 'Kubu Raya'
@@ -29,7 +31,9 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => 1,
                 'jabatan' => 'CEO'
-            ],
+            ]
+        );
+        DB::table('jabatans')->insert(
             [
                 'id' => 2,
                 'jabatan' => 'Teknisi'
@@ -40,7 +44,9 @@ class DatabaseSeeder extends Seeder
                 'email' => 'example@gmail.com',
                 'password' => Hash::make('password'),
                 'role' => 'Admin',
-            ],
+            ]
+        );
+        DB::table('users')->insert(
             [
                 'email' => 'pegawai@gmail.com',
                 'password' => Hash::make('password'),
@@ -52,7 +58,9 @@ class DatabaseSeeder extends Seeder
                 'user_id' => 1,
                 'nama' => 'Example Name',
                 'nip' => '123456789012345678'
-            ],
+            ]
+        );
+        DB::table('pegawais')->insert(
             [
                 'user_id' => 2,
                 'nama' => 'Pegawai Name',

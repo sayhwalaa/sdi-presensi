@@ -15,10 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('nip');
-            $table->foreignId('jabatan_id');
-            $table->foreignId('kantor_id');
+            $table->string('email')->unique()->nullable();
+            $table->string('password')->nullable();
+            $table->enum('role', ['Admin', 'Pegawai'])->default('Pegawai');
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }

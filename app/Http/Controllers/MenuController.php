@@ -15,16 +15,4 @@ class MenuController extends Controller
             'title' => 'Sabang Digital Indonesia'
         ]);
     }
-    public function pegawai()
-    {
-        $pegawai = User::where('role', 'Pegawai')->paginate(5);
-        $jabatan = Jabatan::all();
-        $cabang = Cabang::all();
-        return view('admin.pegawai')->with([
-            'title' => 'Data Pegawai',
-            'pegawai' => $pegawai,
-            'jabatan' => $jabatan,
-            'cabang' => $cabang
-        ]);
-    }
 }

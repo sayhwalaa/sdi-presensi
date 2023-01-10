@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Pegawai::class);
     }
+
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class);
+    }
 }

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PresensiDetail extends Model
 {
     use HasFactory;
+
+    public function presensi()
+    {
+        return $this->hasOne(Presensi::class);
+    }
 }

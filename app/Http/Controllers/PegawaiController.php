@@ -8,6 +8,7 @@ use App\Models\Jabatan;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class PegawaiController extends Controller
 {
@@ -44,11 +45,11 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::Make($request->all(), [
-            'nip' => 'required|numeric|size:18',
-            'nama' => 'required|min:3',
+            'nip' => 'required|numeric|unique:App\Models\Pegawai,nip',
+            'nama' => 'required|min:3|max:50',
             'jabatan_id' => 'required',
-            'jenis_kelamin' => 'required',
-            'no_telepon' => 'numeric',
+            'j_kelamin' => 'required',
+            'no_telepon' => 'numeric|nullable',
             'jabatan_id' => 'required',
             'cabang_id' => 'required',
         ]);
@@ -86,9 +87,11 @@ class PegawaiController extends Controller
      * @param  \App\Models\Pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
-    public function show(Pegawai $pegawai)
+    public function show($id)
     {
-        //
+
+        $user = User::findOrFail($id);
+        return response()->json($user->Pegawai);
     }
 
     /**
@@ -109,9 +112,44 @@ class PegawaiController extends Controller
      * @param  \App\Models\Pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pegawai $pegawai)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::Make($request->all(), [
+            'nip' => [
+                "required",
+                "numeric",
+                Rule::unique('pegawais')->ignore($id, 'user_id')
+            ],
+            'nama' => 'required|min:3|max:50',
+            'jabatan_id' => 'required',
+            'j_kelamin' => 'required',
+            'no_telepon' => 'numeric|nullable',
+            'jabatan_id' => 'required',
+            'cabang_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->messages()
+            ]);
+        } else {
+            $data = [
+                'nip' => trim($request->nip),
+                'nama' => ucwords(trim($request->nama)),
+                'tgl_lahir' => $request->tgl_lahir,
+                'j_kelamin' => $request->j_kelamin,
+                'no_telepon' => $request->no_telepon,
+                'alamat' => $request->alamat,
+                'jabatan_id' => $request->jabatan_id,
+                'cabang_id' => $request->cabang_id,
+            ];
+            Pegawai::where('user_id', $id)
+                ->update($data);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Pegawai successfully updated',
+            ]);
+        }
     }
 
     /**
@@ -120,8 +158,17 @@ class PegawaiController extends Controller
      * @param  \App\Models\Pegawai  $pegawai
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pegawai $pegawai)
+    public function destroy($id)
     {
-        //
+        if (!User::destroy($id)) {
+            return response()->json([
+                'status' => 400,
+                'errors' => 'Failed Deleted'
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Pegawai successfully deleted',
+        ]);
     }
 }

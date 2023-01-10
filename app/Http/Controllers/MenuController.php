@@ -17,7 +17,7 @@ class MenuController extends Controller
     }
     public function pegawai()
     {
-        $pegawai = User::where('role', 'Pegawai')->paginate(15);
+        $pegawai = User::where('role', 'Pegawai')->paginate(5);
         $jabatan = Jabatan::all();
         $cabang = Cabang::all();
         return view('admin.pegawai')->with([

@@ -46,7 +46,7 @@
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
+                                <table id="pegawai-table" class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
                                             <th
@@ -84,21 +84,29 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{$p->pegawai->nip}}</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold mb-0">{{$p->nama??'N/A'}}</span>
+                                                <span
+                                                    class="text-xs font-weight-bold mb-0">{{$p->pegawai->nama??'N/A'}}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span
-                                                    class="text-secondary text-xs font-weight-bold">{{$p->pegawai->jabatan??'N/A'}}</span>
+                                                    class="text-secondary text-xs font-weight-bold">{{$p->pegawai->jabatan_id
+                                                    == null
+                                                    ?'N/A':$jabatan->find($p->pegawai->jabatan_id)->jabatan}}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span
-                                                    class="text-secondary text-xs font-weight-bold">{{$p->pegawai->cabang??'NA'}}</span>
+                                                    class="text-secondary text-xs font-weight-bold">{{$p->pegawai->cabang_id
+                                                    == null
+                                                    ?'N/A':$cabang->find($p->pegawai->cabang_id)->cabang}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <button id="editPegawai" class="btn btn-warning">
+                                                <button id="editPegawai" onclick="editForm('/pegawai/{{$p->id}}')"
+                                                    class="btn btn-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#addPegawaiModal">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button id="deletePegawai" class="btn btn-danger">
+                                                <button id="deletePegawai" onclick="deleteForm('/pegawai/{{$p->id}}')"
+                                                    class="btn btn-danger">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </td>
@@ -106,23 +114,18 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <small class="px-3" style="font-weight: bold">
-                                    Showing
-                                    {{$pegawai->firstItem()}}
-                                    to
-                                    {{$pegawai->lastItem()}}
-                                    of
-                                    {{$pegawai->total()}}
-                                    entries
-                                </small>
-                                <style>
-                                    .page .page-item.active .page-link {
-                                        color: white;
-                                    }
-                                </style>
-                                <div class="page"
-                                    style="float: right; font-weight:bold; margin-right: 50px; margin-top: 20px;">
-                                    {{$pegawai->links()}}
+                                <div class="px-3 page d-flex justify-content-between">
+
+                                    <small style="font-weight: bold">
+                                        Showing
+                                        {{$pegawai->firstItem()}}
+                                        to
+                                        {{$pegawai->lastItem()}}
+                                        of
+                                        {{$pegawai->total()}}
+                                        entries
+                                    </small>
+                                    {{$pegawai->links('pagination::bootstrap-4')}}
                                 </div>
                             </div>
                         </div>
@@ -141,98 +144,80 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('pegawai.store'); }}" method="POST">
-                            @csrf
-                            <div class='mb-3'>
-                                <label for="nip" class="form-label">NIP</label>
-                                <input required type="number" name="nip" id="nip" value="{{ old(" nip") }}"
-                                    class="form-control @error('nip') is-invalid @enderror" autofocus>
-                                @error('nip')
-                                <div class='text-danger'>{{ $message }}</div>
-                                @enderror
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="nama" class="form-label">Nama Lengkap</label>
-                                <input required type="text" name="nama" id="nama" value="{{ old('nama') }}"
-                                    class="form-control @error('nama') is-invalid @enderror">
-                                @error('nama')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <div class='mb-3'>
+                            <input type="hidden" name="id" id="id" value="">
+                            <label for="nip" class="form-label">NIP</label>
+                            <input type="number" name="nip" id="nip" class="form-control" autofocus>
+                            <div id="nip-feedback" class="invalid-feedback"></div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="tglLahir" class="form-label">Tanggal Lahir</label>
-                                <input required type="date" name="tglLahir" id="tglLahir" value="{{ old('tglLahir') }}"
-                                    class="form-control @error('tglLahir') is-invalid @enderror">
-                                @error('tglLahir')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <div class="mb-3">
+                            <label for="nama" class="form-label">Nama Lengkap</label>
+                            <input required type="text" name="nama" id="nama" value="{{ old('nama') }}"
+                                class="form-control">
+                            <div id="nama-feedback" class="invalid-feedback"></div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="jKel" class="form-label">Jenis Kelamin</label>
-                                <select name="jKel" id="jKel" class="form-control" value="{{ old('jKel') }}">
-                                    <option>-- Jenis Kelamin --</option>
-                                    <option value="1" {{ old('jKel')=='Laki-laki' ? 'selected' : '' }}>
-                                        Laki-laki
-                                    </option>
-                                    <option value="2" {{ old('jKel')=='Perempuan' ? 'selected' : '' }}>
-                                        Perempuan
-                                    </option>
-                                </select>
-                                @error('jkel')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <div class="mb-3">
+                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                            <input required type="date" name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}"
+                                class="form-control">
+                            <div id="tgl_lahir-feedback" class="invalid-feedback"></div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="noHp" class="form-label">Nomor Hp</label>
-                                <input required type="tel" name="noHp" id="noHp" value="{{ old('noHp') }}"
-                                    class="form-control @error('noHp') is-invalid @enderror">
-                                @error('noHp')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <div class="mb-3">
+                            <label for="j_kelamin" class="form-label">Jenis Kelamin</label>
+                            <select name="j_kelamin" id="j_kelamin" class="form-control">
+                                <option value="0" disabled selected>-- Jenis Kelamin --</option>
+                                <option value="1">
+                                    Laki-laki
+                                </option>
+                                <option value="2">
+                                    Perempuan
+                                </option>
+                            </select>
+                            <div id="j_kelamin-feedback" class="invalid-feedback"></div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="jabatan_id" class="form-label">Jabatan</label>
-                                <select name="jabatan_id" id="jabatan_id" class="form-control"
-                                    value="{{ old('jabatan_id') }}">
-                                    <option>-- Pilih Jabatan --</option>
-                                    @foreach ($jabatan as $j)
-                                    <option value="{{ $j->id }}">{{ $j->jabatan }}</option>
-                                    @endforeach
-                                </select>
-                                @error('jabatan_id')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <div class="mb-3">
+                            <label for="no_telepon" class="form-label">Nomor Telepon</label>
+                            <input required type="tel" name="no_telepon" id="no_telepon" value="{{ old('no_telepon') }}"
+                                class="form-control">
+                            <div id="no_telepon-feedback" class="invalid-feedback"></div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="cabang_id" class="form-label">Cabang</label>
-                                <select name="cabang_id" id="cabang_id" class="form-control"
-                                    value="{{ old('cabang_id') }}">
-                                    <option>-- Pilih Cabang --</option>
-                                    @foreach ($cabang as $c)
-                                    <option value="{{ $c->id }}">{{ $c->nama_cabang }}</option>
-                                    @endforeach
-                                </select>
-                                @error('cabang_id')
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                        <div class="mb-3">
+                            <label for="jabatan_id" class="form-label">Jabatan</label>
+                            <select name="jabatan_id" id="jabatan_id" class="form-control">
+                                <option value="0" selected disabled>-- Pilih Jabatan --</option>
+                                @foreach ($jabatan as $j)
+                                <option value="{{ $j->id }}">{{ $j->jabatan }}</option>
+                                @endforeach
+                            </select>
+                            <div id="jabatan_id-feedback" class="invalid-feedback"></div>
+                        </div>
 
-                            <div class='mb-3'>
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <textarea class="form-control" name="alamat" id="alamat"
-                                    rows="3">{{ old('alamat') }}</textarea>
-                            </div>
+                        <div class="mb-3">
+                            <label for="cabang_id" class="form-label">Cabang</label>
+                            <select name="cabang_id" id="cabang_id" class="form-control" value="{{ old('cabang_id') }}">
+                                <option value="0" selected disabled>-- Pilih Cabang --</option>
+                                @foreach ($cabang as $c)
+                                <option value="{{ $c->id }}">{{ $c->cabang }}</option>
+                                @endforeach
+                            </select>
+                            <div id="cabang_id-feedback" class="invalid-feedback"></div>
+                        </div>
 
-                            <div style="float: right">
-                                <button id="save" type="button" class="btn btn-primary mb-2">Daftar</button>
-                            </div>
-                        </form>
+                        <div class='mb-3'>
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <textarea class="form-control" name="alamat" id="alamat" rows="3"></textarea>
+                        </div>
+
+                        <div style="float: right">
+                            <button id="save" type="button" class="btn btn-primary mb-2">Daftar</button>
+                        </div>
+
                     </div>
                 </div>
             </div>

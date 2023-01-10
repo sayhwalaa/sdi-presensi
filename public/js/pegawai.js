@@ -7,7 +7,7 @@ $('#addPegawaiModal').on('shown.bs.modal', function () {
 $(document).on('click', '#addPegawai', function () {
     $('#addPegawaiLabel').text('Pendaftaran Pegawai')
     $('#addPegawaiModal').find('input').val('');
-    $('#addPegawaiModal').find('select').val('');
+    $('#addPegawaiModal').find('select').val('0');
     $('#edit').attr('id', 'save')
     $('#save').text('Daftar')
 });
@@ -15,69 +15,71 @@ $(document).on('click', '#addPegawai', function () {
 $(document).on('click', '#save', function (e) {
     e.preventDefault();
     $.ajax({
-        url: 'pegawai',
+        url: '/pegawai',
         type: 'POST',
         data: {
-            name: $('#name').val(),
-            rarity: $('#rarity').val(),
-            birthday: $('#birthday').val(),
-            constellation: $('#constellation').val(),
-            weapon: $('#weapon').val(),
-            vision: $('#vision').val(),
-            region: $('#region').val()
+            nip: $('#nip').val(),
+            nama: $('#nama').val(),
+            tgl_lahir: $('#tgl_lahir').val(),
+            j_kelamin: $('#j_kelamin').val(),
+            no_telepon: $('#no_telepon').val(),
+            jabatan_id: $('#jabatan_id').val(),
+            cabang_id: $('#cabang_id').val(),
+            alamat: $('#alamat').val(),
         },
         success: function (response) {
             if (response.status == 400) {
-                $('#addCharModal').find('.invalid-feedback').show();
-                if (response.errors['name'] == undefined) {
-                    $('#name').removeClass('is-invalid');
-                    $('#name-feedback').hide();
+                $('#addPegawaiModal').find('.invalid-feedback').show();
+                if (response.errors['nip'] == undefined) {
+                    $('#nip').removeClass('is-invalid');
+                    $('#nip-feedback').hide();
                 } else {
-                    $('#name-feedback').text(response.errors['name']);
-                    $('#name').addClass('is-invalid');
+                    $('#nip-feedback').text(response.errors['nip']);
+                    $('#nip').addClass('is-invalid');
                 }
-                if (response.errors['rarity'] == undefined) {
-                    $('#rarity').removeClass('is-invalid');
-                    $('#rarity-feedback').hide();
+                if (response.errors['nama'] == undefined) {
+                    $('#nama').removeClass('is-invalid');
+                    $('#nama-feedback').hide();
                 } else {
-                    $('#rarity-feedback').text(response.errors['rarity']);
-                    $('#rarity').addClass('is-invalid');
+                    $('#nama-feedback').text(response.errors['nama']);
+                    $('#nama').addClass('is-invalid');
                 }
-                if (response.errors['weapon'] == undefined) {
-                    $('#weapon').removeClass('is-invalid');
-                    $('#weapon-feedback').hide();
+                if (response.errors['tgl_lahir'] == undefined) {
+                    $('#tgl_lahir').removeClass('is-invalid');
+                    $('#tgl_lahir-feedback').hide();
                 } else {
-                    $('#weapon-feedback').text(response.errors['weapon']);
-                    $('#weapon').addClass('is-invalid');
+                    $('#tgl_lahir-feedback').text(response.errors['tgl_lahir']);
+                    $('#tgl_lahir').addClass('is-invalid');
                 }
-                if (response.errors['vision'] == undefined) {
-                    $('#vision').removeClass('is-invalid');
-                    $('#vision-feedback').hide();
+                if (response.errors['j_kelamin'] == undefined) {
+                    $('#j_kelamin').removeClass('is-invalid');
+                    $('#j_kelamin-feedback').hide();
                 } else {
-                    $('#vision-feedback').text(response.errors['vision']);
-                    $('#vision').addClass('is-invalid');
+                    $('#j_kelamin-feedback').text(response.errors['j_kelamin']);
+                    $('#j_kelamin').addClass('is-invalid');
                 }
-                if (response.errors['birthday'] == undefined) {
-                    $('#birthday').removeClass('is-invalid');
-                    $('#birthday-feedback').hide();
+                if (response.errors['no_telepon'] == undefined) {
+                    $('#no_telepon').removeClass('is-invalid');
+                    $('#no_telepon-feedback').hide();
                 } else {
-                    $('#birthday-feedback').text(response.errors['birthday']);
-                    $('#birthday').addClass('is-invalid');
+                    $('#no_telepon-feedback').text(response.errors['no_telepon']);
+                    $('#no_telepon').addClass('is-invalid');
                 }
-                if (response.errors['constellation'] == undefined) {
-                    $('#constellation').removeClass('is-invalid');
-                    $('#constellation-feedback').hide();
+                if (response.errors['jabatan_id'] == undefined) {
+                    $('#jabatan_id').removeClass('is-invalid');
+                    $('#jabatan_id-feedback').hide();
                 } else {
-                    $('#constellation-feedback').text(response.errors['constellation']);
-                    $('#constellation').addClass('is-invalid');
+                    $('#jabatan_id-feedback').text(response.errors['jabatan_id']);
+                    $('#jabatan_id').addClass('is-invalid');
                 }
-                if (response.errors['region'] == undefined) {
-                    $('#region').removeClass('is-invalid');
-                    $('#region-feedback').hide();
+                if (response.errors['cabang_id'] == undefined) {
+                    $('#cabang_id').removeClass('is-invalid');
+                    $('#cabang_id-feedback').hide();
                 } else {
-                    $('#region-feedback').text(response.errors['region']);
-                    $('#region').addClass('is-invalid');
+                    $('#cabang_id-feedback').text(response.errors['cabang_id']);
+                    $('#cabang_id').addClass('is-invalid');
                 }
+
             } else {
                 Swal.fire({
                     icon: 'success',
@@ -86,152 +88,156 @@ $(document).on('click', '#save', function (e) {
                     timer: 1500,
                     showConfirmButton: false,
                 });
-                $('#addCharModal').find('.form-control').val('');
-                $('#addCharModal').find('.form-control').removeClass('is-invalid');
-                $('#addCharModal').find('.invalid-feedback').hide();
-                $('#addCharModal').modal('hide');
-                table.ajax.reload();
+                $('#addPegawaiModal').find('.form-control').val('');
+                $('#addPegawaiModal').find('.form-control').removeClass('is-invalid');
+                $('#addPegawaiModal').find('.invalid-feedback').hide();
+                $('#addPegawaiModal').modal('hide');
+                $('#pegawai-table').load(' #pegawai-table');
             }
         }
     });
 });
 
-// $(document).on('click', '#edit', function (e) {
-//     e.preventDefault();
-//     let id = $('#id').val()
-//     $.ajax({
-//         url: 'charAjax/' + id,
-//         type: 'PUT',
-//         data: {
-//             id: id,
-//             name: $('#name').val(),
-//             rarity: $('#rarity').val(),
-//             birthday: $('#birthday').val(),
-//             constellation: $('#constellation').val(),
-//             weapon: $('#weapon').val(),
-//             vision: $('#vision').val(),
-//             region: $('#region').val()
-//         },
-//         success: function (response) {
-//             if (response.status == 400) {
-//                 $('#addCharModal').find('.invalid-feedback').show();
-//                 if (response.errors['name'] == undefined) {
-//                     $('#name').removeClass('is-invalid');
-//                     $('#name-feedback').hide();
-//                 } else {
-//                     $('#name-feedback').text(response.errors['name']);
-//                     $('#name').addClass('is-invalid');
-//                 }
-//                 if (response.errors['rarity'] == undefined) {
-//                     $('#rarity').removeClass('is-invalid');
-//                     $('#rarity-feedback').hide();
-//                 } else {
-//                     $('#rarity-feedback').text(response.errors['rarity']);
-//                     $('#rarity').addClass('is-invalid');
-//                 }
-//                 if (response.errors['weapon'] == undefined) {
-//                     $('#weapon').removeClass('is-invalid');
-//                     $('#weapon-feedback').hide();
-//                 } else {
-//                     $('#weapon-feedback').text(response.errors['weapon']);
-//                     $('#weapon').addClass('is-invalid');
-//                 }
-//                 if (response.errors['vision'] == undefined) {
-//                     $('#vision').removeClass('is-invalid');
-//                     $('#vision-feedback').hide();
-//                 } else {
-//                     $('#vision-feedback').text(response.errors['vision']);
-//                     $('#vision').addClass('is-invalid');
-//                 }
-//                 if (response.errors['birthday'] == undefined) {
-//                     $('#birthday').removeClass('is-invalid');
-//                     $('#birthday-feedback').hide();
-//                 } else {
-//                     $('#birthday-feedback').text(response.errors['birthday']);
-//                     $('#birthday').addClass('is-invalid');
-//                 }
-//                 if (response.errors['constellation'] == undefined) {
-//                     $('#constellation').removeClass('is-invalid');
-//                     $('#constellation-feedback').hide();
-//                 } else {
-//                     $('#constellation-feedback').text(response.errors['constellation']);
-//                     $('#constellation').addClass('is-invalid');
-//                 }
-//                 if (response.errors['region'] == undefined) {
-//                     $('#region').removeClass('is-invalid');
-//                     $('#region-feedback').hide();
-//                 } else {
-//                     $('#region-feedback').text(response.errors['region']);
-//                     $('#region').addClass('is-invalid');
-//                 }
-//             } else {
-//                 Swal.fire({
-//                     icon: 'success',
-//                     title: 'Success',
-//                     text: response.message,
-//                     timer: 1500,
-//                     showConfirmButton: false,
-//                 });
-//                 $('#addCharModal').find('.form-control').val('');
-//                 $('#addCharModal').find('.form-control').removeClass('is-invalid');
-//                 $('#addCharModal').find('.invalid-feedback').hide();
-//                 $('#addCharModal').modal('hide');
-//                 table.ajax.reload();
-//             }
-//         }
-//     });
-// });
+$(document).on('click', '#edit', function (e) {
+    e.preventDefault();
+    let id = $('#id').val()
+    console.log(id);
+    $.ajax({
+        url: '/pegawai/' + id,
+        type: 'PUT',
+        data:
+        {
+            id: id,
+            nip: $('#nip').val(),
+            nama: $('#nama').val(),
+            tgl_lahir: $('#tgl_lahir').val(),
+            j_kelamin: $('#j_kelamin').val(),
+            no_telepon: $('#no_telepon').val(),
+            jabatan_id: $('#jabatan_id').val(),
+            cabang_id: $('#cabang_id').val(),
+            alamat: $('#alamat').val(),
 
-// function editForm(url) {
-//     $.ajax({
-//         type: "GET",
-//         url: url,
-//         dataType: "json",
-//         success: function (response) {
-//             $('#id').val(response.id)
-//             $('#name').val(response.name)
-//             $('#rarity').val(response.rarity)
-//             $('#rarity').trigger('change')
-//             $('#weapon').val(response.weapon)
-//             $('#weapon').trigger('change')
-//             $('#vision').val(response.vision)
-//             $('#vision').trigger('change')
-//             $('#birthday').val(response.birthday)
-//             $('#constellation').val(response.constellation)
-//             $('#region').val(response.region)
-//             $('#addCharModalLabel').text('Edit Character')
-//             $('#save').text('Edit')
-//             $('#save').attr('id', 'edit')
-//         }
-//     });
-// }
-// function deleteChar(url) {
-//     Swal.fire({
-//         title: 'Are you sure?',
-//         text: "You won't be able to revert this!",
-//         icon: 'warning',
-//         showCancelButton: true,
-//         confirmButtonColor: '#3085d6',
-//         cancelButtonColor: '#d33',
-//         confirmButtonText: 'Yes, delete it!'
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             $.ajax({
-//                 type: "DELETE",
-//                 url: url,
-//                 dataType: "json",
-//                 success: function (response) {
-//                     Swal.fire({
-//                         icon: 'success',
-//                         title: 'Success',
-//                         text: response.message,
-//                         timer: 1500,
-//                         showConfirmButton: false,
-//                     });
-//                 }
-//             })
-//         }
-//         table.ajax.reload();
+        },
+        success: function (response) {
+            if (response.status == 400) {
+                $('#addPegawaiModal').find('.invalid-feedback').show();
+                if (response.errors['nip'] == undefined) {
+                    $('#nip').removeClass('is-invalid');
+                    $('#nip-feedback').hide();
+                } else {
+                    $('#nip-feedback').text(response.errors['nip']);
+                    $('#nip').addClass('is-invalid');
+                }
+                if (response.errors['nama'] == undefined) {
+                    $('#nama').removeClass('is-invalid');
+                    $('#nama-feedback').hide();
+                } else {
+                    $('#nama-feedback').text(response.errors['nama']);
+                    $('#nama').addClass('is-invalid');
+                }
+                if (response.errors['tgl_lahir'] == undefined) {
+                    $('#tgl_lahir').removeClass('is-invalid');
+                    $('#tgl_lahir-feedback').hide();
+                } else {
+                    $('#tgl_lahir-feedback').text(response.errors['tgl_lahir']);
+                    $('#tgl_lahir').addClass('is-invalid');
+                }
+                if (response.errors['j_kelamin'] == undefined) {
+                    $('#j_kelamin').removeClass('is-invalid');
+                    $('#j_kelamin-feedback').hide();
+                } else {
+                    $('#j_kelamin-feedback').text(response.errors['j_kelamin']);
+                    $('#j_kelamin').addClass('is-invalid');
+                }
+                if (response.errors['no_telepon'] == undefined) {
+                    $('#no_telepon').removeClass('is-invalid');
+                    $('#no_telepon-feedback').hide();
+                } else {
+                    $('#no_telepon-feedback').text(response.errors['no_telepon']);
+                    $('#no_telepon').addClass('is-invalid');
+                }
+                if (response.errors['jabatan_id'] == undefined) {
+                    $('#jabatan_id').removeClass('is-invalid');
+                    $('#jabatan_id-feedback').hide();
+                } else {
+                    $('#jabatan_id-feedback').text(response.errors['jabatan_id']);
+                    $('#jabatan_id').addClass('is-invalid');
+                }
+                if (response.errors['cabang_id'] == undefined) {
+                    $('#cabang_id').removeClass('is-invalid');
+                    $('#cabang_id-feedback').hide();
+                } else {
+                    $('#cabang_id-feedback').text(response.errors['cabang_id']);
+                    $('#cabang_id').addClass('is-invalid');
+                }
 
-//     })
-// }
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+                $('#addPegawaiModal').find('.form-control').val('');
+                $('#addPegawaiModal').find('.form-control').removeClass('is-invalid');
+                $('#addPegawaiModal').find('.invalid-feedback').hide();
+                $('#addPegawaiModal').modal('hide');
+                $('#pegawai-table').load(' #pegawai-table');
+            }
+        }
+    });
+});
+
+function editForm(url) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        success: function (response) {
+            $('#id').val(response.user_id)
+            $('#nip').val(response.nip)
+            $('#nama').val(response.nama)
+            $('#tgl_lahir').val(response.tgl_lahir)
+            $('#j_kelamin').val(response.j_kelamin)
+            $('#no_telepon').val(response.no_telepon)
+            $('#jabatan_id').val(response.jabatan_id)
+            $('#cabang_id').val(response.cabang_id)
+            $('#alamat').val(response.alamat)
+            $('#addPegawaiLabel').text('Edit Pegawai')
+            $('#save').text('Edit')
+            $('#save').attr('id', 'edit')
+        }
+    });
+}
+
+function deleteForm(url) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "DELETE",
+                url: url,
+                dataType: "json",
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: response.message,
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                }
+            })
+        }
+        $('#pegawai-table').load(' #pegawai-table');
+
+    })
+}

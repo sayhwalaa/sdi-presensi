@@ -39,7 +39,7 @@
                     @endif
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>Data Pengguna</h6>
+                            <h6>Data Pegawai</h6>
                             <button id="addPegawai" class="btn  bg-gradient-dark mb-3" data-bs-toggle="modal"
                                 data-bs-target="#addPegawaiModal">Tambah Data</button>
 

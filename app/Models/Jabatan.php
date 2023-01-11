@@ -9,7 +9,7 @@ class Jabatan extends Model
 {
     use HasFactory;
 
-    public function pegawais()
+    public function pegawai()
     {
         return $this->hasMany(Pegawai::class);
     }

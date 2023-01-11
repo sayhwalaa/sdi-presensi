@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cabang extends Model
+class TaskDetail extends Model
 {
     use HasFactory;
 
-    public function pegawai()
-    {
-        return $this->hasMany(Pegawai::class);
+    public function task(){
+
+        return $this->belongsTo(Task::class)->withTimestamps();
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePresensiDetailsTable extends Migration
+class CreateTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreatePresensiDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('presensi_details', function (Blueprint $table) {
-            $table->foreignId('presensi_id')
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->string('foto');
-            $table->string('lokasi');
-            $table->string('ket');
+            $table->string('task');
+            $table->string('status');
+            $table->timestamps();
         });
     }
 
@@ -31,6 +32,6 @@ class CreatePresensiDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('presensi_details');
+        Schema::dropIfExists('tasks');
     }
 }

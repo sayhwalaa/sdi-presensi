@@ -3,8 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+<<<<<<< HEAD
         DB::table('cabangs')->insert(
             [
                 'id' => 1,
@@ -75,6 +75,18 @@ class DatabaseSeeder extends Seeder
                 'cabang_id' => 2,
             ]
         );
+=======
+        $this->call([
+            CabangSeeder::class,
+            JabatanSeeder::class,
+            UserSeeder::class,
+            PegawaiSeeder::class,
+        ]); 
+        
+        
+        
+        
+>>>>>>> 611f5f488d963fb5dcc08d01d39fc3327fd42924
         // \App\Models\User::factory(10)->create();
     }
 }

@@ -24,7 +24,7 @@
                             <h5>Register</h5>
                         </div>
                         <div class="card-body">
-                            <form class="needs-validation" action="{{route('daftar')}}" method="post" novalidate>
+                            <form class="needs-validation" action="{{route('auth.daftar')}}" method="post" novalidate>
                                 @csrf
                                 <div class="mb-3">
                                     <input type="text" class="form-control @error('nama') is-invalid @enderror"
@@ -48,13 +48,17 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control @error('email') is-invalid @enderror"
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
                                         placeholder="Password" name="password">
+                                    @error('password')
+                                    <small class="invalid-feedback px-2">{{ $message }}</small>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    <input type="password"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
                                         placeholder="Konfirmasi Password" name="password_confirmation">
-                                    @error('password')
+                                    @error('password_confirmation')
                                     <small class="invalid-feedback px-2">{{ $message }}</small>
                                     @enderror
                                 </div>

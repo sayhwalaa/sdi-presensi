@@ -18,12 +18,11 @@ class CreatePegawaisTable extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('nama');
             $table->string('nip');
             $table->date('tgl_lahir')->nullable();
-            $table->tinyInteger('j_kelamin')->nullable();
+            $table->tinyInteger('j_k')->nullable();
+            $table->string('no_tlp')->nullable();
             $table->string('alamat')->nullable();
-            $table->string('no_telepon')->nullable();
             $table->string('foto')->nullable();
             $table->foreignId('jabatan_id')->nullable()
                 ->constrained()

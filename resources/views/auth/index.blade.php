@@ -31,7 +31,7 @@
                     <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
                   @endif
-                  <form role="form" action="{{ route('auth') }}" method="post">
+                  <form role="form" action="{{ route('auth.login') }}" method="post">
                     @csrf
                     <div class="mb-3">
                       <input type="email" class="form-control form-control-lg" placeholder="Email" aria-label="Email"

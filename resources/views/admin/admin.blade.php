@@ -39,14 +39,14 @@
                     @endif
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>Data User</h6>
-                            <button id="addUser" class="btn  bg-gradient-dark mb-3" data-bs-toggle="modal"
-                                data-bs-target="#addUserModal">Tambah Data</button>
+                            <h6>Data Admin</h6>
+                            <button id="addAdmin" class="btn  bg-gradient-dark mb-3" data-bs-toggle="modal"
+                                data-bs-target="#addAdminModal">Tambah Data</button>
 
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
-                                <table id="user-table" class="table align-items-center mb-0">
+                                <table id="admin-table" class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
                                             <th
@@ -67,18 +67,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($user as $key => $p)
+                                        @foreach($admin as $key => $p)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="px-2 mb-0 text-xs">{{$user->firstItem()+$key}}
+                                                        <h6 class="px-2 mb-0 text-xs">{{$admin->firstItem()+$key}}
                                                         </h6>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="text-xs font-weight-bold mb-0">{{$p->pegawai->nama}}</span>
+                                                <span class="text-xs font-weight-bold mb-0">{{$p->nama}}</span>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <span class="text-xs font-weight-bold mb-0">{{$p->email}}</span>
@@ -88,12 +88,18 @@
                                                     class="text-secondary text-xs font-weight-bold">{{$p->role}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <button id="editUser" onclick="editForm('/user/{{$p->id}}')"
+                                                <button id="editAdmin" onclick="editForm('/resource/admin/{{$p->id}}')"
                                                     class="btn btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#addUserModal">
+                                                    data-bs-target="#addAdminModal">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button id="deleteUser" onclick="deleteForm('/user/{{$p->id}}')"
+                                                <button id="resetAdmin" onclick="resetForm({{$p->id}})"
+                                                    class="btn btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#addAdminModal">
+                                                    <i class="fa fa-key"></i>
+                                                </button>
+                                                <button id="deleteAdmin"
+                                                    onclick="deleteForm('/resource/admin/{{$p->id}}')"
                                                     class="btn btn-danger">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
@@ -107,14 +113,14 @@
 
                                     <small style="font-weight: bold">
                                         Showing
-                                        {{$user->firstItem()}}
+                                        {{$admin->firstItem()}}
                                         to
-                                        {{$user->lastItem()}}
+                                        {{$admin->lastItem()}}
                                         of
-                                        {{$user->total()}}
+                                        {{$admin->total()}}
                                         entries
                                     </small>
-                                    {{$user->links('pagination::bootstrap-4')}}
+                                    {{$admin->links('pagination::bootstrap-4')}}
                                 </div>
                             </div>
                         </div>
@@ -124,59 +130,41 @@
         </div>
 
         {{-- modal --}}
-        <div class="modal fade" id="addUserModal" aria-labelledby="addUserLabel" aria-hidden="true">
+        <div class="modal fade" id="addAdminModal" aria-labelledby="addAdminLabel" aria-hidden="true">
             <div class="modal-dialog modal-md" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addUserLabel">Pendaftaran User</h5>
+                        <h5 class="modal-title" id="addAdminLabel">Pendaftaran Admin</h5>
                         <button class="btn-close bg-danger" type="button" data-bs-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
                     <div class="modal-body">
 
-                        <div class='mb-3'>
-                            <input type="hidden" name="id" id="id" value="">
-                            <label for="nip" class="form-label">NIP</label>
-                            <input type="number" name="nip" id="nip" class="form-control" autofocus>
-                            <div id="nip-feedback" class="invalid-feedback"></div>
-                        </div>
-
                         <div class="mb-3">
+                            <input type="hidden" name="id" id="id" value="">
+                            <input type="hidden" name="id" id="idReset" value="">
                             <label for="nama" class="form-label">Nama Lengkap</label>
-                            <input required type="text" name="nama" id="nama" class="form-control">
+                            <input type="text" name="nama" id="nama" class="form-control" autofocus>
                             <div id="nama-feedback" class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                            <input required type="date" name="tgl_lahir" id="tgl_lahir" class="form-control">
-                            <div id="tgl_lahir-feedback" class="invalid-feedback"></div>
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" name="email" id="email" class="form-control">
+                            <div id="email-feedback" class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="j_kelamin" class="form-label">Jenis Kelamin</label>
-                            <select name="j_kelamin" id="j_kelamin" class="form-control">
-                                <option value="0" disabled selected>-- Jenis Kelamin --</option>
-                                <option value="1">
-                                    Laki-laki
-                                </option>
-                                <option value="2">
-                                    Perempuan
-                                </option>
-                            </select>
-                            <div id="j_kelamin-feedback" class="invalid-feedback"></div>
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control">
+                            <div id="password-feedback" class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="no_telepon" class="form-label">Nomor Telepon</label>
-                            <input required type="tel" name="no_telepon" id="no_telepon" class="form-control">
-                            <div id="no_telepon-feedback" class="invalid-feedback"></div>
-                        </div>
-
-
-                        <div class='mb-3'>
-                            <label for="alamat" class="form-label">Alamat</label>
-                            <textarea class="form-control" name="alamat" id="alamat" rows="3"></textarea>
+                            <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                            <input type="password" name="password_confirmation" id="password_confirmation"
+                                class="form-control">
+                            <div id="password_confirmation-feedback" class="invalid-feedback"></div>
                         </div>
 
                         <div style="float: right">
@@ -197,7 +185,7 @@
     <!--   Core JS Files   -->
     @include('template.script')
 
-    <script src="/js/user.js"></script>
+    <script src="/js/admin.js"></script>
 </body>
 
 </html>

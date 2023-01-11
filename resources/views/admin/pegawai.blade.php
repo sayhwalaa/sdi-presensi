@@ -84,8 +84,7 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{$p->pegawai->nip}}</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span
-                                                    class="text-xs font-weight-bold mb-0">{{$p->pegawai->nama??'N/A'}}</span>
+                                                <span class="text-xs font-weight-bold mb-0">{{$p->nama??'N/A'}}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span
@@ -100,12 +99,19 @@
                                                     ?'N/A':$cabang->find($p->pegawai->cabang_id)->cabang}}</span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <button id="editPegawai" onclick="editForm('/pegawai/{{$p->id}}')"
+                                                <button id="editPegawai"
+                                                    onclick="editForm('/resource/pegawai/{{$p->id}}')"
                                                     class="btn btn-warning" data-bs-toggle="modal"
                                                     data-bs-target="#addPegawaiModal">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <button id="deletePegawai" onclick="deleteForm('/pegawai/{{$p->id}}')"
+                                                <button id="resetPegawai" onclick="resetForm({{$p->id}})"
+                                                    class="btn btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#resetModal">
+                                                    <i class="fa fa-key"></i>
+                                                </button>
+                                                <button id="deletePegawai"
+                                                    onclick="deleteForm('/resource/pegawai/{{$p->id}}')"
                                                     class="btn btn-danger">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
@@ -154,21 +160,25 @@
 
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Lengkap</label>
-                            <input required type="text" name="nama" id="nama" value="{{ old('nama') }}"
-                                class="form-control">
+                            <input type="text" name="nama" id="nama" class="form-control">
                             <div id="nama-feedback" class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" name="email" id="email" class="form-control">
+                            <div id="email-feedback" class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                            <input required type="date" name="tgl_lahir" id="tgl_lahir" value="{{ old('tgl_lahir') }}"
-                                class="form-control">
+                            <input type="date" name="tgl_lahir" id="tgl_lahir" class="form-control">
                             <div id="tgl_lahir-feedback" class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="j_kelamin" class="form-label">Jenis Kelamin</label>
-                            <select name="j_kelamin" id="j_kelamin" class="form-control">
+                            <label for="j_k" class="form-label">Jenis Kelamin</label>
+                            <select name="j_k" id="j_k" class="form-control">
                                 <option value="0" disabled selected>-- Jenis Kelamin --</option>
                                 <option value="1">
                                     Laki-laki
@@ -177,14 +187,13 @@
                                     Perempuan
                                 </option>
                             </select>
-                            <div id="j_kelamin-feedback" class="invalid-feedback"></div>
+                            <div id="j_k-feedback" class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="no_telepon" class="form-label">Nomor Telepon</label>
-                            <input required type="tel" name="no_telepon" id="no_telepon" value="{{ old('no_telepon') }}"
-                                class="form-control">
-                            <div id="no_telepon-feedback" class="invalid-feedback"></div>
+                            <label for="no_tlp" class="form-label">Nomor Telepon</label>
+                            <input type="tel" name="no_tlp" id="no_tlp" class="form-control">
+                            <div id="no_tlp-feedback" class="invalid-feedback"></div>
                         </div>
 
                         <div class="mb-3">
@@ -223,6 +232,40 @@
             </div>
         </div>
         {{-- end modal --}}
+
+        {{-- reset modal --}}
+        <div class="modal fade" id="resetModal" aria-labelledby="resetLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resetLabel">Ganti Password</h5>
+                        <button class="btn-close bg-danger" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class='mb-3'>
+                            <input type="hidden" name="id" id="idReset" value="">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" autofocus>
+                            <div id="password-feedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class='mb-3'>
+                            <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                            <input type="password" name="password_confirmation" id="password_confirmation"
+                                class="form-control">
+                            <div id="password_confirmation-feedback" class="invalid-feedback"></div>
+                        </div>
+
+                        <div style="float: right">
+                            <button id="reset" type="button" class="btn btn-primary mb-2">Ubah</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- end reset modal --}}
         <!--end container-->
         {{-- footer --}}
         @include('template.footer')

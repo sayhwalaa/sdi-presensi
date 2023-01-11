@@ -18,7 +18,7 @@ class AuthController extends Controller
             'title' => 'Login'
         ]);
     }
-    public function create(Request $request)
+    public function create()
     {
         return view('auth.daftar')->with([
             'title' => 'Daftar'
@@ -26,23 +26,26 @@ class AuthController extends Controller
     }
     public function store(Request $request)
     {
-
         $validateData = $request->validate([
             'nama' => 'required|min:3|max:50',
-            'nip' => 'required|numeric|unique:App\Models\Pegawai,nip',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|min:6',
+            'nip' => 'required|numeric|unique:App\Models\Pegawai,nip'
         ]);
-        $validateData['password'] = Hash::make($validateData['password']);
-        User::create($validateData);
-        $user = User::latest()->first();
-        $pegawai = new Pegawai;
-        $pegawai->nama = $validateData['nama'];
-        $pegawai->nip = $validateData['nip'];
-        $user->pegawai()->save($pegawai);
+        User::create([
+            'nama' => $validateData['nama'],
+            'role' => 'Pegawai',
+            'email' => $validateData['email'],
+            'password' => Hash::make($validateData['password'])
+        ]);
+        Pegawai::create([
+            'user_id' => User::latest()->first()->id,
+            'nip' => trim($request->nip),
+        ]);
 
         $request->session()->flash('success', "Sign Up Success! Please Login");
-        return redirect()->route('login');
+        return redirect()->route('auth.login');
     }
     public function login(Request $request)
     {
@@ -53,8 +56,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            $user = User::find(Auth::user()->id);
-            return redirect()->intended(route('menu.home'))->with('success', 'Selamat datang kembali ' . $user->pegawai->nama);
+            return redirect()->intended(route('menu.home'))->with('success', 'Selamat datang kembali ' . Auth::user()->nama);
         }
         return back()->with('error', 'Email atau Password Salah')->onlyInput('email');
     }
@@ -64,6 +66,6 @@ class AuthController extends Controller
         Auth::logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
-        return redirect(route('login'));
+        return redirect(route('auth.index'));
     }
 }

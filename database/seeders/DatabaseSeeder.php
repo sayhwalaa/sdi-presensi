@@ -41,30 +41,38 @@ class DatabaseSeeder extends Seeder
         );
         DB::table('users')->insert(
             [
+                'nama' => 'Example Name',
+                'role' => 'Admin',
                 'email' => 'example@gmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'Admin',
             ]
         );
         DB::table('users')->insert(
             [
+                'nama' => 'Nama Pegawai',
+                'role' => 'Pegawai',
                 'email' => 'pegawai@gmail.com',
                 'password' => Hash::make('password'),
-                'role' => 'Pegawai',
             ]
         );
         DB::table('pegawais')->insert(
             [
                 'user_id' => 1,
-                'nama' => 'Example Name',
-                'nip' => '123456789012345678'
+                'nip' => '123456789012345678',
+                'j_k' => 2,
+                'no_tlp' => '081521544674',
+                'jabatan_id' => 1,
+                'cabang_id' => 1,
             ]
         );
         DB::table('pegawais')->insert(
             [
                 'user_id' => 2,
-                'nama' => 'Pegawai Name',
-                'nip' => '123456789012345679'
+                'nip' => '123456789012345679',
+                'j_k' => 2,
+                'no_tlp' => '081521544674',
+                'jabatan_id' => 2,
+                'cabang_id' => 2,
             ]
         );
         // \App\Models\User::factory(10)->create();

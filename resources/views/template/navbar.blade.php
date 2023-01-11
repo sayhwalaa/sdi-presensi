@@ -38,7 +38,7 @@
                         <div class="modal-body">Apakah anda yakin untuk logout?</div>
                         <div style="margin-right: 10px;">
                             @if (auth()->user())
-                            <form action="{{ route('logout') }}" method="post">
+                            <form action="{{ route('auth.logout') }}" method="post">
                                 @csrf
                                 <button class="btn btn-danger" style="float: right">Logout</button>
                             </form>

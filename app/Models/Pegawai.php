@@ -15,11 +15,18 @@ class Pegawai extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function cabang()
     {
         return $this->belongsTo(Cabang::class);
     }
-    public function task(){
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Cabang::class);
+    }
+    public function task()
+    {
 
         return $this->belongsToMany(Task::class)->withTimestamps();
     }

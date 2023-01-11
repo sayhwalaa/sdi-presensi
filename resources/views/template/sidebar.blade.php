@@ -49,6 +49,18 @@
                     <span class="nav-link-text ms-1">Task Mingguan</span>
                 </a>
             </li>
+            <li class="mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Akun</h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="/profil">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-single-02 text-info text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Profil</span>
+                </a>
+            </li>
             {{-- end pegawai menu --}}
 
             @else
@@ -66,7 +78,16 @@
                 </a>
                 <ul class="collapse flex-column ms-1" style="list-style: none; margin-top:-10px;" id="collapseOne"
                     data-bs-parent="#menu">
-                    <li style="margin-left: -30px;">
+                    <li style="margin-left: -30px">
+                        <a href="/admin/admin" class="nav-link">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center d-flex align-items-center justify-content-center">
+                                <i class="ni ni-app text-info text-sm opacity-10"></i>
+                            </div>
+                            <span class="d-none nav-link d-sm-inline">Admin</span>
+                        </a>
+                    </li>
+                    <li style="margin-left: -30px; margin-top:-20px;">
                         <a href="/admin/pegawai" class="nav-link">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center d-flex align-items-center justify-content-center">
@@ -75,15 +96,7 @@
                             <span class="d-none nav-link d-sm-inline">Pegawai</span>
                         </a>
                     </li>
-                    <li style="margin-left: -30px; margin-top:-20px;">
-                        <a href="/admin/user" class="nav-link">
-                            <div
-                                class="icon icon-shape icon-sm border-radius-md text-center d-flex align-items-center justify-content-center">
-                                <i class="ni ni-app text-info text-sm opacity-10"></i>
-                            </div>
-                            <span class="d-none nav-link d-sm-inline">User</span>
-                        </a>
-                    </li>
+
                 </ul>
             </li>
             <li class="nav-item">
@@ -170,18 +183,7 @@
             {{-- end admin menu--}}
             @endif
 
-            <li class="mt-3">
-                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Akun</h6>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="/profil">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-single-02 text-info text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Profil</span>
-                </a>
-            </li>
+
         </ul>
     </div>
 </aside>

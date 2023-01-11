@@ -15,14 +15,15 @@ $(document).on('click', '#addPegawai', function () {
 $(document).on('click', '#save', function (e) {
     e.preventDefault();
     $.ajax({
-        url: '/pegawai',
+        url: '/resource/pegawai',
         type: 'POST',
         data: {
             nip: $('#nip').val(),
             nama: $('#nama').val(),
+            email: $('#email').val(),
             tgl_lahir: $('#tgl_lahir').val(),
-            j_kelamin: $('#j_kelamin').val(),
-            no_telepon: $('#no_telepon').val(),
+            j_k: $('#j_k').val(),
+            no_tlp: $('#no_tlp').val(),
             jabatan_id: $('#jabatan_id').val(),
             cabang_id: $('#cabang_id').val(),
             alamat: $('#alamat').val(),
@@ -44,6 +45,13 @@ $(document).on('click', '#save', function (e) {
                     $('#nama-feedback').text(response.errors['nama']);
                     $('#nama').addClass('is-invalid');
                 }
+                if (response.errors['email'] == undefined) {
+                    $('#email').removeClass('is-invalid');
+                    $('#email-feedback').hide();
+                } else {
+                    $('#email-feedback').text(response.errors['email']);
+                    $('#email').addClass('is-invalid');
+                }
                 if (response.errors['tgl_lahir'] == undefined) {
                     $('#tgl_lahir').removeClass('is-invalid');
                     $('#tgl_lahir-feedback').hide();
@@ -51,19 +59,19 @@ $(document).on('click', '#save', function (e) {
                     $('#tgl_lahir-feedback').text(response.errors['tgl_lahir']);
                     $('#tgl_lahir').addClass('is-invalid');
                 }
-                if (response.errors['j_kelamin'] == undefined) {
-                    $('#j_kelamin').removeClass('is-invalid');
-                    $('#j_kelamin-feedback').hide();
+                if (response.errors['j_k'] == undefined) {
+                    $('#j_k').removeClass('is-invalid');
+                    $('#j_k-feedback').hide();
                 } else {
-                    $('#j_kelamin-feedback').text(response.errors['j_kelamin']);
-                    $('#j_kelamin').addClass('is-invalid');
+                    $('#j_k-feedback').text(response.errors['j_k']);
+                    $('#j_k').addClass('is-invalid');
                 }
-                if (response.errors['no_telepon'] == undefined) {
-                    $('#no_telepon').removeClass('is-invalid');
-                    $('#no_telepon-feedback').hide();
+                if (response.errors['no_tlp'] == undefined) {
+                    $('#no_tlp').removeClass('is-invalid');
+                    $('#no_tlp-feedback').hide();
                 } else {
-                    $('#no_telepon-feedback').text(response.errors['no_telepon']);
-                    $('#no_telepon').addClass('is-invalid');
+                    $('#no_tlp-feedback').text(response.errors['no_tlp']);
+                    $('#no_tlp').addClass('is-invalid');
                 }
                 if (response.errors['jabatan_id'] == undefined) {
                     $('#jabatan_id').removeClass('is-invalid');
@@ -103,16 +111,17 @@ $(document).on('click', '#edit', function (e) {
     let id = $('#id').val()
     console.log(id);
     $.ajax({
-        url: '/pegawai/' + id,
+        url: '/resource/pegawai/' + id,
         type: 'PUT',
         data:
         {
             id: id,
             nip: $('#nip').val(),
             nama: $('#nama').val(),
+            email: $('#email').val(),
             tgl_lahir: $('#tgl_lahir').val(),
-            j_kelamin: $('#j_kelamin').val(),
-            no_telepon: $('#no_telepon').val(),
+            j_k: $('#j_k').val(),
+            no_tlp: $('#no_tlp').val(),
             jabatan_id: $('#jabatan_id').val(),
             cabang_id: $('#cabang_id').val(),
             alamat: $('#alamat').val(),
@@ -135,6 +144,14 @@ $(document).on('click', '#edit', function (e) {
                     $('#nama-feedback').text(response.errors['nama']);
                     $('#nama').addClass('is-invalid');
                 }
+                if (response.errors['email'] == undefined) {
+                    $('#email').removeClass('is-invalid');
+                    $('#email-feedback').hide();
+                } else {
+                    $('#email-feedback').text(response.errors['email']);
+                    $('#email').addClass('is-invalid');
+                }
+
                 if (response.errors['tgl_lahir'] == undefined) {
                     $('#tgl_lahir').removeClass('is-invalid');
                     $('#tgl_lahir-feedback').hide();
@@ -142,19 +159,19 @@ $(document).on('click', '#edit', function (e) {
                     $('#tgl_lahir-feedback').text(response.errors['tgl_lahir']);
                     $('#tgl_lahir').addClass('is-invalid');
                 }
-                if (response.errors['j_kelamin'] == undefined) {
-                    $('#j_kelamin').removeClass('is-invalid');
-                    $('#j_kelamin-feedback').hide();
+                if (response.errors['j_k'] == undefined) {
+                    $('#j_k').removeClass('is-invalid');
+                    $('#j_k-feedback').hide();
                 } else {
-                    $('#j_kelamin-feedback').text(response.errors['j_kelamin']);
-                    $('#j_kelamin').addClass('is-invalid');
+                    $('#j_k-feedback').text(response.errors['j_k']);
+                    $('#j_k').addClass('is-invalid');
                 }
-                if (response.errors['no_telepon'] == undefined) {
-                    $('#no_telepon').removeClass('is-invalid');
-                    $('#no_telepon-feedback').hide();
+                if (response.errors['no_tlp'] == undefined) {
+                    $('#no_tlp').removeClass('is-invalid');
+                    $('#no_tlp-feedback').hide();
                 } else {
-                    $('#no_telepon-feedback').text(response.errors['no_telepon']);
-                    $('#no_telepon').addClass('is-invalid');
+                    $('#no_tlp-feedback').text(response.errors['no_tlp']);
+                    $('#no_tlp').addClass('is-invalid');
                 }
                 if (response.errors['jabatan_id'] == undefined) {
                     $('#jabatan_id').removeClass('is-invalid');
@@ -195,12 +212,14 @@ function editForm(url) {
         url: url,
         dataType: "json",
         success: function (response) {
+            $('#idReset').val('')
             $('#id').val(response.user_id)
             $('#nip').val(response.nip)
             $('#nama').val(response.nama)
+            $('#email').val(response.email)
             $('#tgl_lahir').val(response.tgl_lahir)
-            $('#j_kelamin').val(response.j_kelamin)
-            $('#no_telepon').val(response.no_telepon)
+            $('#j_k').val(response.j_k)
+            $('#no_tlp').val(response.no_tlp)
             $('#jabatan_id').val(response.jabatan_id)
             $('#cabang_id').val(response.cabang_id)
             $('#alamat').val(response.alamat)
@@ -209,6 +228,56 @@ function editForm(url) {
             $('#save').attr('id', 'edit')
         }
     });
+}
+$(document).on('click', '#reset', function (e) {
+    e.preventDefault();
+    let idReset = $('#idReset').val()
+    $.ajax({
+        url: '/resource/pegawai/' + idReset,
+        type: 'PUT',
+        data:
+        {
+            idReset: idReset,
+            password: $('#password').val(),
+            password_confirmation: $('#password_confirmation').val(),
+
+        },
+        success: function (response) {
+            if (response.status == 400) {
+                $('#resetModal').find('.invalid-feedback').show();
+                if (response.errors['password'] == undefined) {
+                    $('#password').removeClass('is-invalid');
+                    $('#password-feedback').hide();
+                } else {
+                    $('#password-feedback').text(response.errors['password']);
+                    $('#password').addClass('is-invalid');
+                }
+                if (response.errors['password_confirmation'] == undefined) {
+                    $('#password_confirmation').removeClass('is-invalid');
+                    $('#password_confirmation-feedback').hide();
+                } else {
+                    $('#password_confirmation-feedback').text(response.errors['password_confirmation']);
+                    $('#password_confirmation').addClass('is-invalid');
+                }
+
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+                $('#resetModal').find('.form-control').val('');
+                $('#resetModal').find('.form-control').removeClass('is-invalid');
+                $('#resetModal').find('.invalid-feedback').hide();
+                $('#resetModal').modal('hide');
+            }
+        }
+    });
+});
+function resetForm(id) {
+    $('#idReset').val(id)
 }
 
 function deleteForm(url) {

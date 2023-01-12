@@ -16,19 +16,20 @@ class DataAbsenController extends Controller
             'title' => 'Absensi alfa/izin'
         ]);
     }
-    public function dataabsen(){
-        return view ('admin.rekap.dataAbsensi')->with([
+    
+    public function dataabsensi(){
+        return view ('admin.rekap.DataAbsensi')->with([
             'title' => 'Data Absensi'
         ]);
     }
     
     public function datatelat(){
-        return view ('admin.rekap.dataTelat')->with([
+        return view ('admin.rekap.DataTelat')->with([
             'title' => 'Data Pegawai Telat'
         ]);
     }
     public function dataalpaizin(){
-        return view ('admin.rekap.dataAlpaIzin')->with([
+        return view ('admin.rekap.DataAlpaIzin')->with([
             'title' => 'Data Pegawai Alpa/Izin'
         ]);
     }

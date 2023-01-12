@@ -8,6 +8,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DataAbsenController;
 use App\Http\Controllers\MenuPegawaiController;
 
+
 // home
 Route::get('/', function () {
     return view('index')->with([
@@ -35,7 +36,9 @@ Route::prefix('resource')->group(function () {
 //data absen 
 Route::get('absensiManual', [DataAbsenController::class, 'index'])->name('absensiManual');
 Route::get('alpaIzin',      [DataAbsenController::class, 'izin'])->name('alpaIzin');
-Route::get('dataAbsen',     [DataAbsenController::class,'dataabsen'])->name('dataAbsen');
+
+//data rekap
+Route::get('dataAbsensi',     [DataAbsenController::class,'dataabsensi'])->name('dataAbsensi');
 Route::get('dataAlpaIzin',  [DataAbsenController::class, 'dataalpaizin'])->name('dataAlpaIzin');
 Route::get('datatelat',     [DataAbsenController::class, 'datatelat'])->name('datatelat');
 

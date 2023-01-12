@@ -38,7 +38,7 @@
                     <div class="card-body">
                         <div class="card mb-4">
                             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                                <h6>Absen Manual</h6>
+                                <h6>Alfa / Izin</h6>
                             </div>
                             <div class="card-body ">
                                 <div class="row">
@@ -66,22 +66,12 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="nip" class="form-label">Tanggal Absen</label>
-                                                <input required type="date" name="tgl_masuk" id="tgl_awal" value="{{ old('tgl_masuk') }}"
-                                                    class="form-control @error('tgl_masuk') is-invalid @enderror" autofocus>
-                                                    @error('tgl_masuk')
+                                                <label for="nip" class="form-label">Tanggal</label>
+                                                <input required type="date" name="tgl" id="tgl" value="{{ old('tgl') }}"
+                                                    class="form-control @error('tgl') is-invalid @enderror" autofocus>
+                                                    @error('tgl')
                                                     <div class='text-danger'>{{ $message }}</div>
                                                     @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="nip" class="form-label">Jam Absen</label>
-                                                <input required type="time" name="jam_absen" id="jam_absen" value="{{ old('jam_absen') }}"
-                                                    class="form-control @error('jam_absen') is-invalid @enderror" autofocus>
-                                                 @error('jam_absen')
-                                                    <div class='text-danger'>{{ $message }}</div>
-                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-12">

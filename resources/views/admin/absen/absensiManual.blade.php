@@ -38,34 +38,12 @@
                     <div class="card-body">
                         <div class="card mb-4">
                             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                                <h6>Alfa / Izin</h6>
+                                <h6>Tambah Absensi</h6>
                             </div>
                             <div class="card-body ">
                                 <div class="row">
                                     <form action="#" method="POST">
                                         @csrf
-                                        <div class="mb-3">
-                                            <label for="j_absen" class="form-label">Jenis Alpa/Izin</label>
-                                            <select name="j_absen" id="j_absen" class="form-control">
-                                                <option value="0" disabled selected>-- Pilih Jenis --</option>
-                                                <option value="1">
-                                                    Izin
-                                                </option>
-                                                <option value="2">
-                                                    Sakit
-                                                </option>
-                                                <option value="3">
-                                                    Alpa
-                                                </option>
-                                                <option value="4">
-                                                    Izin Keluar
-                                                </option>
-                                                <option value="5">
-                                                    Pulang Awal
-                                                </option>
-                                            </select>
-                                            <div id="j_absen-feedback" class="invalid-feedback"></div>
-                                        </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="nip" class="form-label">Nama pegawai</label>
@@ -88,12 +66,24 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="nip" class="form-label">Tanggal</label>
-                                                <input required type="date" name="tgl" id="tgl" value="{{ old('tgl') }}"
-                                                    class="form-control @error('tgl') is-invalid @enderror" autofocus>
-                                                    @error('tgl')
+                                                <label for="nip" class="form-label">Tgl absen masuk</label>
+                                                <input required type="date" name="tgl_masuk" id="tgl_awal" value="{{ old('tgl_masuk') }}"
+                                                    class="form-control @error('tgl_masuk') is-invalid @enderror" autofocus>
+                                                    @error('tgl_masuk')
                                                     <div class='text-danger'>{{ $message }}</div>
                                                     @enderror
+                                            </div>
+                                        </div>
+                                      
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="nip" class="form-label">Jam Absen</label>
+                                                <input required type="time" name="jam_absen" id="jam_absen" value="{{ old('jam_absen') }}"
+                                                    class="form-control @error('jam_absen') is-invalid @enderror" autofocus>
+                                                 @error('jam_absen')
+                                                    <div class='text-danger'>{{ $message }}</div>
+                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-12">

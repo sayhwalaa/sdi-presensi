@@ -6,6 +6,7 @@ use App\Http\Controllers\MenuAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DataAbsenController;
+use App\Http\Controllers\MenuPegawaiController;
 
 
 // home
@@ -32,11 +33,22 @@ Route::prefix('resource')->group(function () {
     Route::resource('/admin', AdminController::class)->middleware('auth');
 });
 
-//MenuAbsensi
-Route::get('AbsensiManual', [DataAbsenController::class, 'index'])->name('AbsensiManual');
-Route::get('AlpaIzin', [DataAbsenController::class, 'izin'])->name('AlpaIzin');
+//data absen 
+Route::get('absensiManual', [DataAbsenController::class, 'index'])->name('absensiManual');
+Route::get('alpaIzin',      [DataAbsenController::class, 'izin'])->name('alpaIzin');
 
-//MenuRekap
-Route::get('DataAbsensi', [DataAbsenController::class,'dataabsensi'])->name('DataAbsensi');
-Route::get('DataAlpaIzin', [DataAbsenController::class, 'dataalpaizin'])->name('DataAlpaIzin');
-Route::get('DataTelat', [DataAbsenController::class, 'datatelat'])->name('DataTelat');
+//data rekap
+Route::get('dataAbsensi',     [DataAbsenController::class,'dataabsensi'])->name('dataAbsensi');
+Route::get('dataAlpaIzin',  [DataAbsenController::class, 'dataalpaizin'])->name('dataAlpaIzin');
+Route::get('datatelat',     [DataAbsenController::class, 'datatelat'])->name('datatelat');
+
+
+
+//Route Profil
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/profil',               [MenuPegawaiController::class, 'index'])->name('profil.index');
+    Route::get('/profil/create',        [MenuPegawaiController::class, 'create'])->name('profil.create');
+    Route::post('/profil/PUpdate/{id}', [MenuPegawaiController::class, 'PUpdate'])->name('PUpdate');
+    Route::post('crop',                 [MenuPegawaiController::class, 'crop'])->name('crop');
+    Route::post('change-password',      [MenuPegawaiController::class,'changePassword'])->name('adminChangePassword');
+    });

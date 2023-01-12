@@ -4,7 +4,9 @@
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href="/">
-            <img src="/img/sabang.png" class="navbar-brand-img h-100" alt="main_logo">
+            <img src="/img/logoSabang.jpg" class="navbar-brand-img h-100" alt="main_logo">
+            <span class="ms-0 font-weight-bold">Sabang Digital Indonesia</span>
+        </a>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
@@ -111,7 +113,7 @@
                 <ul class="collapse flex-column ms-1" style="list-style: none; margin-top:-10px;" id="collapseThree"
                     data-bs-parent="#menu">
                     <li style="margin-left: -30px;">
-                        <a href="/AbsensiManual" class="nav-link">
+                        <a href="/absensiManual" class="nav-link">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center d-flex align-items-center justify-content-center">
                                 <i class="ni ni-badge text-info text-sm opacity-10"></i>
@@ -120,7 +122,7 @@
                         </a>
                     </li>
                     <li style="margin-left: -30px; margin-top:-20px;">
-                        <a href="/AlpaIzin" class="nav-link">
+                        <a href="/alpaIzin" class="nav-link">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center d-flex align-items-center justify-content-center">
                                 <i class="ni ni-badge text-info text-sm opacity-10"></i>
@@ -143,7 +145,7 @@
                 <ul class="collapse flex-column ms-1" style="list-style: none; margin-top:-10px;" id="collapseFour"
                     data-bs-parent="#menu">
                     <li style="margin-left: -30px;">
-                        <a href="/DataAbsensi" class="nav-link">
+                        <a href="/dataAbsensi" class="nav-link">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center d-flex align-items-center justify-content-center">
                                 <i class="ni ni-archive-2 text-info text-sm opacity-10"></i>
@@ -152,7 +154,7 @@
                         </a>
                     </li>
                     <li style="margin-left: -30px; margin-top:-20px;">
-                        <a href="/DataTelat" class="nav-link">
+                        <a href="/datatelat" class="nav-link">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center d-flex align-items-center justify-content-center">
                                 <i class="ni ni-archive-2 text-info text-sm opacity-10"></i>
@@ -161,12 +163,12 @@
                         </a>
                     </li>
                     <li style="margin-left: -30px; margin-top:-20px;">
-                        <a href="/DataAlpaIzin" class="nav-link">
+                        <a href="/dataAlpaIzin" class="nav-link">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center d-flex align-items-center justify-content-center">
                                 <i class="ni ni-archive-2 text-info text-sm opacity-10"></i>
                             </div>
-                            <span class="d-none nav-link d-sm-inline">Data Pegawai Alpa/Izin</span>
+                            <span class="d-none nav-link d-sm-inline">Data pegawai alpa/izin</span>
                         </a>
                     </li>
                 </ul>

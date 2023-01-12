@@ -7,15 +7,16 @@ use Illuminate\Http\Request;
 class DataAbsenController extends Controller
 {
     public function index(){
-        return view ('admin.absensi.AbsensiManual')->with([
+        return view ('admin.absen.absensiManual')->with([
             'title' => 'Absensi Manual'
         ]);
     }
     public function izin(){
-        return view ('admin.absensi.AlpaIzin')->with([
-            'title' => 'Absensi Alpa/Izin'
+        return view ('admin.absen.alpaIzin')->with([
+            'title' => 'Absensi alfa/izin'
         ]);
     }
+    
     public function dataabsensi(){
         return view ('admin.rekap.DataAbsensi')->with([
             'title' => 'Data Absensi'

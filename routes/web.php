@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MenuAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\DataAbsenController;
+use App\Http\Controllers\MenuPegawaiController;
 
 // home
 Route::get('/', function () {
@@ -29,3 +31,22 @@ Route::prefix('resource')->group(function () {
     Route::resource('/pegawai', PegawaiController::class)->middleware('auth');
     Route::resource('/admin', AdminController::class)->middleware('auth');
 });
+
+//data absen 
+Route::get('absensiManual', [DataAbsenController::class, 'index'])->name('absensiManual');
+Route::get('alpaIzin',      [DataAbsenController::class, 'izin'])->name('alpaIzin');
+Route::get('dataAbsen',     [DataAbsenController::class,'dataabsen'])->name('dataAbsen');
+Route::get('dataAlpaIzin',  [DataAbsenController::class, 'dataalpaizin'])->name('dataAlpaIzin');
+Route::get('datatelat',     [DataAbsenController::class, 'datatelat'])->name('datatelat');
+
+
+
+//Route Profil
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/profil',               [MenuPegawaiController::class, 'index'])->name('profil.index');
+    Route::get('/profil/create',        [MenuPegawaiController::class, 'create'])->name('profil.create');
+    Route::post('/profil/PUpdate/{id}', [MenuPegawaiController::class, 'PUpdate'])->name('PUpdate');
+    Route::post('crop',                 [MenuPegawaiController::class, 'crop'])->name('crop');
+    Route::post('change-password',      [MenuPegawaiController::class,'changePassword'])->name('adminChangePassword');
+    
+    });

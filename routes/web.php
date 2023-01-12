@@ -51,5 +51,4 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/profil/PUpdate/{id}', [MenuPegawaiController::class, 'PUpdate'])->name('PUpdate');
     Route::post('crop',                 [MenuPegawaiController::class, 'crop'])->name('crop');
     Route::post('change-password',      [MenuPegawaiController::class,'changePassword'])->name('adminChangePassword');
-    
     });

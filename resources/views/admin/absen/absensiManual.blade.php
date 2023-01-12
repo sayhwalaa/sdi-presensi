@@ -38,7 +38,7 @@
                     <div class="card-body">
                         <div class="card mb-4">
                             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                                <h6>Tambah Absensi</h6>
+                                <h6>Absen Manual</h6>
                             </div>
                             <div class="card-body ">
                                 <div class="row">
@@ -66,7 +66,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="nip" class="form-label">Tgl absen masuk</label>
+                                                <label for="nip" class="form-label">Tanggal Absen</label>
                                                 <input required type="date" name="tgl_masuk" id="tgl_awal" value="{{ old('tgl_masuk') }}"
                                                     class="form-control @error('tgl_masuk') is-invalid @enderror" autofocus>
                                                     @error('tgl_masuk')

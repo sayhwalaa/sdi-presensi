@@ -5,13 +5,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-<<<<<<< HEAD
-    <link rel="icon" type="image/png" href="/img/logo.png">
-    <title>{{$title}}</title>
-=======
     <link rel="icon" type="image/png" href="/img/sabang.png">\
     <title>{{ $title }}</title>
->>>>>>> c8493a21516353370d511c83540616b454803576
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->

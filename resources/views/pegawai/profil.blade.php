@@ -14,133 +14,165 @@
 
         <!--start container-->
         <div class="container-fluid py-4">
+            <div class="col-md-12">
+                @if (session()->has('msg'))
+                <div class="alert alert-success" style="color:white;">
+                    {{ session()->get('msg') }}
+                    <div style="float: right">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <div class="col-12">
+                @if(session()->has('pesan'))
+                <div class="alert alert-success" style="color:white;">
+                    {{ session()->get('pesan')}}
+                    <div style="float: right">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <div class="row">
+
                 <div class="col-md-12">
-                    @if (session()->has('msg'))
-                    <div class="alert alert-success" style="color:white;">
-                        {{ session()->get('msg') }}
-                        <div style="float: right">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-
-                <div class="col-12">
-                    @if(session()->has('pesan'))
-                    <div class="alert alert-success" style="color:white;">
-                        {{ session()->get('pesan')}}
-                        <div style="float: right">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-                
-                <div class="row">
-
-                    <div class="col-md-12">
-                        <form action="{{ route('PUpdate',$pegawai->id) }}" method="POST" enctype="multipart/form-data" id="PegawaiInfoForm">
-                            @csrf
-                            <div class="card">
-                                <div class="card-header pb-0">                        
-                                    <div class="card-body box-profile">
-                                        <div class="text-center">
-                                          <img class="profile-user-img img-fluid img-circle pegawai_image"
-                                                src="/users/foto/{{Auth::user()->pegawai()->poto == ''? 'no-image.png':Auth::user()->pegawai()->foto}}"
-                                                alt="profil pegawai" width="225" style="border-radius: .5rem;">
-                                        </div>
-                                        <h3 class="profile-username text-center">{{Auth::pegawai()->nama}}</h3>                   
-                                        <p class="text-muted text-center">Pegawai</p>                 
-                                        <input type="file" name="file" id="file" style="opacity: 0;height:1px;display:none">
-                                        <a href="javascript:void(0)" class="btn btn-primary btn-block " id="change_picture_btn"><b>Ubah Profil</b></a>                     
-                                    </div>       
-                                </div>
-    
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="example-text-input" class="form-control-label">Nama</label>
-                                                <input class="form-control" type="text" value="{{ Auth::user()->pegawai()->nama }}" name="nama">
-                                                <span class="text-danger error-text nama_error"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="example-text-input" class="form-control-label">NIP</label>
-                                                <input class="form-control" type="number" value="{{ Auth::user()->pegawai()->nip }}" name="nip">
-                                                <span class="text-danger error-text nip_error"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="example-text-input" class="form-control-label">Tanggal Lahir</label>
-                                                <input class="form-control" type="date" value="{{ Auth::user()->pegawai()->tgl_lahir }}" name="tgl_lahir">
-                                                <span class="text-danger error-text tgl_lahir_error"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="example-text-input" class="form-control-label">Jenis Kelamin</label>
-                                                <input class="form-control" value="{{ Auth::user()->pegawai()->j_kelamin }}" name="j_kelamin">
-                                                <span class="text-danger error-text j_kelamin_error"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="example-text-input" class="form-control-label">no Hp</label>
-                                                <input class="form-control" type="tel" value="{{ Auth::user()->pegawai()->no_telepon }}" name="no_telepon">
-                                                <span class="text-danger error-text no_telepon_error"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="example-text-input" class="form-control-label">Alamat</label>
-                                                <input class="form-control" type="text" value="{{ Auth::user()->pegawai()->alamat }}" name="alamat">
-                                                <span class="text-danger error-text alamat_error"></span>
-                                            </div>
-                                        </div>
-                                    </div>           
-                                    <button type="submit" class="btn btn-primary mb-2">Update</button>
-                                </div>
-                                <div class="body">
-                                    <form class="form-horizontal" action="{{ route('ChangePw') }}" method="POST" id="changePw">
-                                        @csrf
-                                        <div class="mb-3">
-                                            <label for="passwordLama" class="form-label">Password Lama</label>
-                                            <input type="password"  name="oldpassword" id="inputPass" placeholder="Masukkan Password Lama"
-                                                class="form-control @error('password') is-invalid @enderror">
-                                            @error('password')
-                                            <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                                <span class="text-danger error-text oldpassword_error"></span>
-                                        </div>
-                                        <div class="mb-3">
-                                                <label for="passwordBaru" class="form-label">Password Baru</label>
-                                                <input type="password"  name="newpassword" id="inputNew" placeholder="Masukkan Password Baru" 
-                                                    class="form-control @error('passwordBaru') is-invalid @enderror">
-                                                @error('passwordBaru')
-                                                <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                                <span class="text-danger error-text newpassword_error"></span>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="kPasswordBaru" class="form-label">Konfirmasi Password Baru</label>
-                                                <input type="password"  name="knewpassword" id="inputKnew" placeholder="Masukkan Konfirmasi Password Baru"
-                                                    class="form-control @error('kPasswordBaru') is-invalid @enderror">
-                                                @error('kPasswordBaru')
-                                                <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                        </div>
-                                        <div style="float: right">
-                                            <button type="submit" class="btn btn-primary mb-2">Update Password</button>   
-                                        </div>
-                                    </form>
+                    <form action="{{ route('PUpdate',Auth::user()->id) }}" method="POST" enctype="multipart/form-data"
+                        id="PegawaiInfoForm">
+                        @csrf
+                        <div class="card">
+                            <div class="card-header pb-0">
+                                <div class="card-body box-profile">
+                                    <div class="text-center">
+                                        @if (!Auth::user()->pegawai->foto == '')
+                                        <img class="profile-user-img img-fluid img-circle pegawai_image"
+                                            src="/users/images/{{Auth::user()->pegawai->foto}}" alt="profil pegawai"
+                                            width="225" style="border-radius: .5rem;">
+                                        @else
+                                        <div class="bg-secondary text-center"
+                                            style="width: 225px;height: 225px;border-radius: .5rem"></div>
+                                        @endif
+                                    </div>
+                                    <h3 class="profile-username text-center">{{Auth::user()->nama}}</h3>
+                                    <p class="text-muted text-center">Pegawai</p>
+                                    <input type="file" name="file" id="file" style="opacity: 0;height:1px;display:none">
+                                    <a href="javascript:void(0)" class="btn btn-primary btn-block "
+                                        id="change_picture_btn"><b>Ubah Profil</b></a>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nama" class="form-control-label">Nama</label>
+                                            <input class="form-control" type="text" value="{{ Auth::user()->nama }}"
+                                                name="nama">
+                                            <span class="text-danger error-text nama_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nip" class="form-control-label">NIP</label>
+                                            <input class="form-control" type="number"
+                                                value="{{ Auth::user()->pegawai->nip }}" name="nip">
+                                            <span class="text-danger error-text nip_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="tgl_lahir" class="form-control-label">Tanggal
+                                                Lahir</label>
+                                            <input class="form-control" type="date"
+                                                value="{{ Auth::user()->pegawai->tgl_lahir }}" name="tgl_lahir">
+                                            <span class="text-danger error-text tgl_lahir_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="j_k" class="form-control-label">Jenis
+                                                Kelamin</label>
+                                            <select class="form-control" name="j_k" id="j_k">
+                                                <option value="0" disabled>-- Pilih Jenis Kelamin --</option>
+                                                <option value="1" {{Auth::user()->jk == 1 ?'selected':null}}>Laki-laki
+                                                </option>
+                                                <option value="2" {{Auth::user()->jk == 2 ?'selected':null}}>Perempuan
+                                                </option>
+                                            </select>
+                                            <span class="text-danger error-text j_k_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">no Hp</label>
+                                            <input class="form-control" type="tel"
+                                                value="{{ Auth::user()->pegawai->no_tlp }}" name="no_tlp">
+                                            <span class="text-danger error-text no_tlp_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email" class="form-control-label">Email</label>
+                                            <input class="form-control" type="text" value="{{ Auth::user()->email }}"
+                                                name="email">
+                                            <span class="text-danger error-text email_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Alamat</label>
+                                            <textarea class="form-control" name="alamat" id="alamat" cols="30"
+                                                rows="10">{{ Auth::user()->pegawai->alamat }}</textarea>
+                                            <span class="text-danger error-text alamat_error"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mb-2">Update</button>
+                            </div>
+                            <div class="body">
+                                <form class="form-horizontal" action="{{ route('ChangePw') }}" method="POST"
+                                    id="changePw">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="passwordLama" class="form-label">Password Lama</label>
+                                        <input type="password" name="oldpassword" id="inputPass"
+                                            placeholder="Masukkan Password Lama"
+                                            class="form-control @error('password') is-invalid @enderror">
+                                        @error('password')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <span class="text-danger error-text oldpassword_error"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="passwordBaru" class="form-label">Password Baru</label>
+                                        <input type="password" name="newpassword" id="inputNew"
+                                            placeholder="Masukkan Password Baru"
+                                            class="form-control @error('passwordBaru') is-invalid @enderror">
+                                        @error('passwordBaru')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                        <span class="text-danger error-text newpassword_error"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="kPasswordBaru" class="form-label">Konfirmasi Password Baru</label>
+                                        <input type="password" name="knewpassword" id="inputKnew"
+                                            placeholder="Masukkan Konfirmasi Password Baru"
+                                            class="form-control @error('kPasswordBaru') is-invalid @enderror">
+                                        @error('kPasswordBaru')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div style="float: right">
+                                        <button type="submit" class="btn btn-primary mb-2">Update Password</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </form>
                 </div>
+            </div>
 
         </div>
         <!--end container-->
@@ -151,6 +183,7 @@
     </main>
     <!--   Core JS Files   -->
     @include('template.script')
+    <script src="{{asset('/plugins\ijaboCropTool\ijaboCropTool.min.js')}}"></script>
 
     <script>
         $.ajaxSetup({
@@ -177,7 +210,7 @@
                     alert(message);
                   }
                });   
-        </script>
+    </script>
 
 </body>
 

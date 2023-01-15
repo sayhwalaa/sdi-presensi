@@ -38,7 +38,7 @@ Route::get('absensiManual', [DataAbsenController::class, 'index'])->name('absens
 Route::get('alpaIzin',      [DataAbsenController::class, 'izin'])->name('alpaIzin');
 
 //data rekap
-Route::get('dataAbsensi',     [DataAbsenController::class, 'dataabsensi'])->name('dataAbsensi');
+Route::get('dataAbsensi',     [DataAbsenController::class,'dataabsensi'])->name('dataAbsensi');
 Route::get('dataAlpaIzin',  [DataAbsenController::class, 'dataalpaizin'])->name('dataAlpaIzin');
 Route::get('datatelat',     [DataAbsenController::class, 'datatelat'])->name('datatelat');
 
@@ -50,6 +50,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profil/create',        [MenuPegawaiController::class, 'create'])->name('profil.create');
     Route::post('/profil/PUpdate/{id}', [MenuPegawaiController::class, 'PUpdate'])->name('PUpdate');
     Route::post('crop',                 [MenuPegawaiController::class, 'crop'])->name('crop');
-    Route::post('change-password',      [MenuPegawaiController::class,'changePassword'])->name('adminChangePassword');
     Route::post('change-password',      [MenuPegawaiController::class, 'changePassword'])->name('ChangePw');
 });
+
+//Route MenuPegawai
+Route::get('presensi',             [MenuPegawaiController::class, 'presensi'])->name('pegawai.presensi');
+Route::get('task',                 [MenuPegawaiController::class, 'task'])->name('pegawai.task');

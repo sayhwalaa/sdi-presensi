@@ -54,7 +54,7 @@
             </div>
             <div class="click">
                 <canvas id="canvas" width="320" height="240"></canvas>
-                <button class="btn btn-success" id="click-photo">Present</button>
+                <button class="btn btn-success" id="click-photo">Presensi</button>
             </div>
         <script src="script.js"></script>
         </div>

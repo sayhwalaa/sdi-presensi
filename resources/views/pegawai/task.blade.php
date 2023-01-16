@@ -73,11 +73,7 @@
                                                             Aksi</th>
                                                     </tr>
                                                 </thead>
-                                               
                                             </table>
-                                   
-            
-                                           
                                         </div>
                                     </div>
                                 </div>

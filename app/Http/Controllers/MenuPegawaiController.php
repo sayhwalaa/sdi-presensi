@@ -19,7 +19,7 @@ class MenuPegawaiController extends Controller
 
     public function index()
     {
-        $title = 'My Profile';
+        $title = 'Profil';
         return view('pegawai.profil', compact('title'));
     }
 
@@ -107,5 +107,15 @@ class MenuPegawaiController extends Controller
                 return response()->json(['status' => 1, 'msg' => 'Your password has been changed successfully']);
             }
         }
+    }
+
+    public function presensi(){
+        $title = 'Presensi';
+        return view('pegawai.presensi', compact('title'));
+    }
+
+    public function task(Request $request){
+        $title = 'Task';
+        return view('pegawai.task', compact('title'));
     }
 }

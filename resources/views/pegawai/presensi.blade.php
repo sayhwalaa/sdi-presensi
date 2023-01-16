@@ -12,7 +12,7 @@
         @include('template.navbar')
         {{-- end navbar --}}
         <div class="container">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('presensi.store') }}">
                 @csrf
                 <div class="col-md-12">
                     <div id="my_camera" class="bg-secondary mb-3" style="width:400px; height:300px; "></div>

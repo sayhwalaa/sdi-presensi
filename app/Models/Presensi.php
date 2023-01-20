@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Presensi extends Model
 {
@@ -18,5 +19,10 @@ class Presensi extends Model
     public function presensi_detail()
     {
         return $this->hasOne(PresensiDetail::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }
